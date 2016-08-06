@@ -39,7 +39,7 @@ def load_document_local(url):
         fn = "contexts/context_oa.json"
     elif url in ['http://www.w3.org/ns/anno.jsonld']:
         fn = "contexts/context_wawg.json"
-    fh = file(fn)
+    fh = open(fn)
     data = fh.read()
     fh.close()
     doc['document'] = data;
@@ -93,7 +93,7 @@ class MangoServer(object):
         self.server_prefers = "description"
         self.require_if_match = False # For testing Mirador
 
-        fh = file('contexts/annotation_frame.jsonld')
+        fh = open('contexts/annotation_frame.jsonld')
         data = fh.read()
         fh.close()
         self.annoframe = json.loads(data)
@@ -251,7 +251,7 @@ class MangoServer(object):
                 js = request._json
                 if not js:
                     abort(400, "Empty JSON")
-            except Exception, e:
+            except Exception as e:
                 abort(400, "JSON is not well formed: {0}".format(e))
         if js.has_key('_id'):
             del js['_id']
@@ -816,7 +816,7 @@ def main():
     run(host=host, port=port, app=mr.get_bottle_app(), debug=debug)
 
 def apache():
-    fh = file('config.json')
+    fh = open('config.json')
     data = fh.read()
     fh.close()
     conf = json.loads(data)
